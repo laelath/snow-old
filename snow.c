@@ -26,6 +26,20 @@ int main(int argc, char *argv[])
 
     int ch;
     while ((ch = getch()) != 113) {
+        int nrows, ncols;
+        getmaxyx(stdscr, nrows, ncols);
+        if (nrows != rows || ncols != cols) {
+            rows = nrows;
+            cols = ncols;
+            free(snow);
+            free(updt);
+            snow = malloc(rows * cols + 1);
+            updt = malloc(rows * cols);
+            memset(snow, ' ', rows * cols);
+            memset(updt, 0, rows * cols);
+            snow[rows * cols] = '\0';
+        }
+
         for (int i = rows - 2; i >= 0; --i) {
             for (int j = i * cols; j < (i + 1) * cols; ++j) {
                 if (snow[j] == '*') {
