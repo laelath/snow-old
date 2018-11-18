@@ -18,11 +18,10 @@ int main(int argc, char *argv[])
 
     getmaxyx(stdscr, rows, cols);
 
-    char *snow = malloc(rows * cols + 1);
+    char *snow = malloc(rows * cols);
     char *updt = malloc(rows * cols);
     memset(snow, ' ', rows * cols);
     memset(updt, 0, rows * cols);
-    snow[rows * cols] = '\0';
 
     int ch;
     while ((ch = getch()) != 113) {
@@ -33,11 +32,10 @@ int main(int argc, char *argv[])
             cols = ncols;
             free(snow);
             free(updt);
-            snow = malloc(rows * cols + 1);
+            snow = malloc(rows * cols);
             updt = malloc(rows * cols);
             memset(snow, ' ', rows * cols);
             memset(updt, 0, rows * cols);
-            snow[rows * cols] = '\0';
         }
 
         for (int i = rows - 2; i >= 0; --i) {
@@ -70,7 +68,7 @@ int main(int argc, char *argv[])
             }
         }
 
-        mvprintw(0, 0, "%s", snow);
+        mvprintw(0, 0, "%.*s", rows * cols, snow);
 
         refresh();
 
